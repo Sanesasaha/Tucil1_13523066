@@ -8,9 +8,6 @@ public class Solve {
         Piece[][] pieces = data.pieces;
         int total_pieces = data.P;
 
-        // System.out.println();
-        // System.out.println(currentRow + " "+ currentCol);
-
         // Menentukan indeks paling atas kiri yang dapat diisi
         boolean found = false;
         while(currentCol<board.width && !found){
@@ -36,22 +33,6 @@ public class Solve {
                 currentRow++;
             }
         }
-
-        // System.out.println();
-        // System.out.println(currentRow + " "+ currentCol);
-        // board.printState();
-
-        // for(currentRow=row; currentRow<board.height; currentRow++){
-        //     for(currentCol=col; currentCol<board.width; currentCol++){
-        //         if(board.state[currentRow][currentCol] == ' '){
-        //             found = true;
-        //             break;
-        //         }
-        //     }
-        //     if(found){
-        //         break;
-        //     }
-        // }
         
         // Basis: solusi ditemukan
         if(currentRow == board.height && currentCol == board.width && board.state[currentRow-1][currentCol-1] != ' '){

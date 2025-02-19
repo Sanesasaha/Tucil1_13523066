@@ -3,6 +3,7 @@ public class Piece {
     public int height = 0;
     
     public char id = '?';
+    public boolean isPlaced = false;
 
     public int top_left_index = 0;
     public char[][] shape;
@@ -69,7 +70,7 @@ public class Piece {
                 break;
             }
         }
-        
+
         return NP;
     }
 }

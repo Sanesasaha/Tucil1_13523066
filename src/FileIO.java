@@ -1,9 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileIO {
-    
+
     public static int max2(int a, int b){
         if(a>b){return a;}
         return b;
@@ -134,28 +135,62 @@ public class FileIO {
         return data;
     }
 
+    public static void writeOutputTxt(String filename, InputData data, long searchTime){
+        try {
+            int i, j;
+            Board B = data.B;
+
+            FileWriter writer = new FileWriter(filename.replace(".txt", "-solution.txt"));
+            writer.write("Solusi untuk file " + filename.replace("-solution.txt", ".txt") + "\n");
+            writer.write("\n");
+
+            if(B.status == -1){
+                writer.write("Tidak ada solusi yang ditemukan\n");
+            } else{
+                for(i=0;i<B.height;i++){
+                    for(j=0;j<B.width;j++){
+                            writer.write(B.state[i][j]);
+                    }
+                    writer.write("\n");
+                }
+            }
+
+            writer.write("\n");
+            writer.write("Waktu pencarian (ms) : "+ searchTime +"\n");
+            writer.write("Banyak kasus ditinjau: "+ B.total_case +"\n");
+
+            writer.close();
+            System.out.println("Solusi berhasil disimpan dalam file " + filename);
+        } catch (IOException e) {
+            System.out.println("Terjadi error saat penulisan file");
+        }
+    }
+
+    public static void writeOutputCLI(String filename, InputData data, long searchTime){
+        System.out.println("Alternatif solusi:");
+        if(data.B.status == -1){
+            System.out.println("Tidak ada solusi yang ditemukan");
+        } else{
+            data.B.printState();
+        }
+
+        System.out.println();
+        System.out.println("Waktu pencarian (ms) : "+ searchTime);
+        System.out.println("Banyak kasus ditinjau: "+ data.B.total_case);
+    }
+
     public static void main(String[] args) {
-        InputData data = readInputTxt("data/", "original.txt");
+        InputData data = readInputTxt("data/input/", "original.txt");
         System.out.println("------------");
         long start, end, exec;
-        
-        // data.B.place(data.pieces[0][0], 0, 0);
-        // data.B.place(data.pieces[1][0], 0, 1);
-        // data.B.place(data.pieces[2][0], 2, 2);
-        // data.B.printState();
-
-        // data.pieces[1][1].printShape();
-        // data.pieces[1][1].stats();
         
         start = System.nanoTime();
         data.B  = Solve.BruteForce(data, 0, 0);
         end = System.nanoTime();
-        exec = (end - start);
+        exec = (end - start)/1000000;
 
-        System.out.println();
-        data.B.printState();
-        System.out.println("status: " + data.B.status);
-        System.out.println("Time (ms): " + exec/1000000);
-        System.out.println("Total case: " + data.B.total_case);
+        writeOutputCLI("original.txt", data, exec);
+        Image.create(data.B);
+        // writeOutputTxt("original.txt", data, exec);
     }
 }

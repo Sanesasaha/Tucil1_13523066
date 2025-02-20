@@ -40,6 +40,11 @@ public class Validation {
             }
             line.replaceAll("\\s+$", "");
             
+            if(line.length() ==0){
+                msg("Error: Terdapat empty line pada file .txt");
+                return false;
+            }
+            
             // Data N M P kurang/lebih/bukan angka
             currentLine = line.split(" ");
             if(currentLine.length != 3){
@@ -72,6 +77,12 @@ public class Validation {
                 return false;
             }
             line.replaceAll("\\s+$", "");
+            
+            if(line.length() ==0){
+                msg("Error: Terdapat empty line pada file .txt");
+                return false;
+            }
+
             if(data.S.equals("DEFAULT") == false){
                 msg("Error: mode permainan tidak valid");
                 return false;
@@ -87,6 +98,12 @@ public class Validation {
             try{
                 while(line != null){
                     line.replaceAll("\\s+$", "");
+
+                    if(line.length() ==0){
+                        msg("Error: Terdapat empty line pada file .txt");
+                        return false;
+                    }
+
                     firstOcc = '?';
 
                     // Validasi karakter dalam 1 baris
@@ -158,36 +175,93 @@ public class Validation {
             return false;
         }
 
-        // setiap input distrip kanan
-        // row kosong skip aja...
-
-
-        // waktu displit ngga jadi 3
-        // waktu displit, ada yang bukan angka
-        // dimensi <=0
-        // jumlah piece > 26
-
-        // baris 2 bukan DEFAULT
-
-        // baris piece ada yang 1 baris beda huruf
-        // jumlah piece ngga sama kaya yg dibilang di baris 1
-        // ada karakter yang bukan abjad kapital
-        // ada karakter yang udah kepake di piece lain
-
-
-
-        // [Early validation]
-
-        // kalau ada piece yang gk mungkin disimpen di state awal, gk ada solusi
-        // hapus simetri yang duplikat
-        // hapus konfigurasi yang "ngga mungkin disimpen"
-        // cek jumlah tile dari semua piece, kalau != dimensi board, gk ada solusi
-        // rata kirii
-
         return true;
+    }
+
+    public static boolean totalTile(InputData data){
+        int i, j, k;
+        int total = 0;
+
+        // Hitung jumlah petak yang dapat diisi pada board
+        for(i=0;i<data.B.height;i++){
+            for(j=0;j<data.B.width;j++){
+                if(data.B.state[i][j] == ' '){
+                    total++;
+                }
+            }
+        }
+
+        for(k=0;k<data.P;k++){
+            // Periksa apakah dimensi piece lebih kecil dari dimensi board
+            if(
+                data.pieces[k][0].height > data.B.height &&
+                data.pieces[k][0].width > data.B.width &&
+                data.pieces[k][0].height > data.B.width &&
+                data.pieces[k][0].width > data.B.height
+            ){
+                return false;
+            }
+
+            // Hitung total petak setiap piece
+            for(i=0;i<data.pieces[k][0].height;i++){
+                for(j=0;j<data.pieces[k][0].width;j++){
+                    if(data.pieces[k][0].shape[i][j] == data.pieces[k][0].id){
+                        total--;
+                    }
+                }    
+            }
+        }
+
+        if(total == 0){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public static InputData symmetryOptimization(InputData data){
+        int i, j, k, a, b;
+        boolean isDuplicate;
+        Piece[][] pieces = data.pieces;
+
+        for(i=0; i<data.P; i++){
+            for(j=0; j<7; j++){
+                // Jika suatu konfigurasi berukuran lebih dari suatu dimensi board, 
+                // anggap selayaknya piece kosong
+                if(pieces[i][j].height > data.B.height || pieces[i][j].width > data.B.width){
+                    pieces[i][j].height = 0;
+                    pieces[i][j].width = 0;
+                }
+                for(k=j+1; k<8; k++){
+                    if(
+                        pieces[i][j].height != 0 && 
+                        pieces[i][k].height != 0 &&
+                        pieces[i][j].height == pieces[i][k].height
+                    ){
+                        // Cek apakah kedua konfigurasi sama
+                        isDuplicate = true;
+                        for(a=0;a<pieces[i][k].height;a++){
+                            for(b=0;b<pieces[i][k].width;b++){
+                                if(pieces[i][j].shape[a][b] != pieces[i][k].shape[a][b]){
+                                    isDuplicate = false;
+                                }
+                            }    
+                        }
+
+                        // Jika sama, perlakukan selayaknya piece kosong (berukuran 0x0)
+                        if(isDuplicate){
+                            pieces[i][k].height = 0;
+                            pieces[i][k].width = 0;
+                        }
+                    }
+                }
+            }
+        }
+        return data;
     }
 
     public static void main(String[] args){
         boolean valid = txt("data/", "original.txt");
+        System.out.println(valid);
     }
 }

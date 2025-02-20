@@ -14,11 +14,16 @@ public class FileIO {
 
         String line;
         String[] currentLine;
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         int i = 0; 
         char currentChar = '?';
         int j, k;
+
+        boolean isValid = Validation.txt(directory, txt);
+        if(!isValid){
+            System.out.println("Input teks file tidak valid!");
+            return data;
+        }
 
         txt = directory + txt;
 
@@ -30,8 +35,6 @@ public class FileIO {
             }
             currentLine = line.split(" ");
             
-            // TODOLIST: Validasi -> nilai -1, >26, bukan angka, kosong?, bonus custom?, alphabet valid?
-            
             data.N = Integer.parseInt(currentLine[0]);
             data.M = Integer.parseInt(currentLine[1]);
             data.P = Integer.parseInt(currentLine[2]);
@@ -41,7 +44,6 @@ public class FileIO {
             data.B.width = data.M;
             data.B.height = data.N;
             data.B.initiate();
-            
 
             if(data.S.equals("DEFAULT") == false){
                 data.N = -1;
@@ -75,15 +77,7 @@ public class FileIO {
             e.printStackTrace();
         }
 
-        // System.out.println(data.M);
-        // System.out.println(data.N);
-        // System.out.println(data.P);
-        // System.out.println(data.S);
-        // for(i=0;i<data.P;i++){
-        //     System.out.print("[" + data.pieces[i][0].height + ", " + data.pieces[i][0].width + "] ");
-        // }
-
-        // Pembacaan bentuk setiap piece (TODOLIST: handle kasus aneh2)
+        // Pembacaan bentuk setiap piece
         try (BufferedReader br = new BufferedReader(new FileReader(txt))){
             line = br.readLine();
             line = br.readLine();
@@ -116,8 +110,14 @@ public class FileIO {
             e.printStackTrace();
         }
         
+        // Cek apakah jumlah tile pada piece mungkin mengisi board
+        isValid =  Validation.totalTile(data);
+        if(!isValid){
+            data.B.status = -1;
+            return data;
+        }
+
         // Simpan semua variasi rotasi dan pencerminan pada pieces
-        // TODOLIST: boleh prune yang simetrinya sama?
         for(i=0; i<data.P; i++){
             for(j=1;j<4;j++){
                 data.pieces[i][j] = data.pieces[i][j-1].rotate90();
@@ -127,6 +127,9 @@ public class FileIO {
                 data.pieces[i][j] = data.pieces[i][j-1].rotate90();
             }
         }
+
+        // Optimalisasi simetri
+        data = Validation.symmetryOptimization(data);
 
         return data;
     }
@@ -152,7 +155,7 @@ public class FileIO {
         System.out.println();
         data.B.printState();
         System.out.println("status: " + data.B.status);
-        System.out.println("Time (ns): " + exec);
+        System.out.println("Time (ms): " + exec/1000000);
         System.out.println("Total case: " + data.B.total_case);
     }
 }

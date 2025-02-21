@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 public class Image {
-    public static void create(Board B){
+    public static void create(Board B, String filename){
         int i, j, a, b;
         int width, height;
         int cellSize = 40;
@@ -17,13 +17,13 @@ public class Image {
         
         width = B.width;
         height = B.height;
+
         String[] colors = {
-            "#ff0000", "#b30000", "#00ff13", "#00b30d", "#0013ff", "#000db3", "#ff3a00", "#b32a00",
-            "#00ff4e", "#00b33a", "#004eff", "#003ab3", "#ff7500", "#b35900", "#00ff89", "#00b36b",
-            "#0089ff", "#0066b3", "#ffb000", "#b38a00", "#62ff00", "#49b300", "#00c4ff", "#0094b3",
-            "#ffeb00", "#b3a600", "#27ff00", "#1db300", "#00feff", "#00b3b3", "#d7ff00", "#94b300",
-            "#9cff00", "#75b300", "#2700ff", "#1c00b3", "#ff00eb", "#b300a9", "#ff00b0", "#b30087",
-            "#ff0075", "#b3005b"
+            "#808080", "#8b4513", "#228b22", "#808000", "#000080", "#9acd32",
+            "#8fbc8f", "#800080", "#ff0000", "#ff8c00", "#ffff00", "#7cfc00",
+            "#8a2be2", "#00ff7f", "#4169e1", "#dc143c", "#00ffff", "#0000ff",
+            "#ff00ff", "#db7093", "#f0e68c", "#ff1493", "#ffa07a", "#ee82ee",
+            "#87cefa", "#ffe4e1"
         };
         
         // Dictionary
@@ -40,24 +40,32 @@ public class Image {
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 0, imgWidth, imgHeight);
 
+        // Generating the image
         a = 0;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for(i=borderSize;i<imgHeight;i+= cellSize+borderSize){
             b = 0;
             for(j=borderSize;j<imgWidth;j+= cellSize+borderSize){
                 g2d.setColor(Color.decode(colorMap.get(B.state[a][b])));
                 g2d.fillRect(j, i, cellSize, cellSize);
+
+                g2d.setColor(Color.BLACK);
+                g2d.setFont(new Font("Arial", Font.BOLD, 24));
+                g2d.drawString(Character.toString(B.state[a][b]), j+ cellSize/2 - 8, i + cellSize/2 + 8);
                 b++;
             }    
             a++;
         }
 
-        File outputFile = new File("data/output/grid_image.png");
-        outputFile.getParentFile().mkdirs(); // Ensure the output directory exists
+        // Save
+        filename.replace(".txt", "");
+        File outputFile = new File("data/output/" + filename + ".png");
+        outputFile.getParentFile().mkdirs();
         try {
             ImageIO.write(image, "png", outputFile);
-            System.out.println("Image saved: " + outputFile.getAbsolutePath());
+            System.out.println("Image disimpan sebagai " + filename + ".png");
         } catch (IOException e) {
-            System.out.println("Error saving image: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

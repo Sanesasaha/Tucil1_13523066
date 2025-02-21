@@ -190,7 +190,7 @@ public class FileIO {
         exec = (end - start)/1000000;
 
         writeOutputCLI("original.txt", data, exec);
-        Image.create(data.B);
+        Image.create(data.B, "original-solution.txt");
         // writeOutputTxt("original.txt", data, exec);
     }
 }

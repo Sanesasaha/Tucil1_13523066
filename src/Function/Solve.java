@@ -1,3 +1,5 @@
+package Function;
+
 public class Solve {
     public static Board BruteForce(InputData data, int row, int col){
         int i, j;

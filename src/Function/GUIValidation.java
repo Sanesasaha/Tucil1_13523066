@@ -1,14 +1,22 @@
+package Function;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
-public class Validation {
+
+public class GUIValidation {
     public static int max2(int a, int b){
         if(a>b){return a;}
         return b;
     }
 
-    public static void msg(String s){
+    public static void msg(ImageView imageView, Label l, String s){
+        imageView.setImage(new Image("img/what.png"));
+        l.setText(s);
         System.out.println(s);
     }
 
@@ -20,7 +28,7 @@ public class Validation {
         return true;
     }
 
-    public static boolean txt(String directory, String txt){
+    public static boolean txt(ImageView imageView, Label l, String directory, String txt){
         String line;
         String[] currentLine;
 
@@ -35,20 +43,20 @@ public class Validation {
             // Validasi baris pertama
             line = br.readLine();
             if(line == null){
-                msg("Error: File .txt tidak valid");
+                msg(imageView, l, "Error: File .txt tidak valid");
                 return false;
             }
             line.replaceAll("\\s+$", "");
             
             if(line.length() ==0){
-                msg("Error: Terdapat empty line pada file .txt");
+                msg(imageView, l, "Error: Terdapat empty line pada file .txt");
                 return false;
             }
             
             // Data N M P kurang/lebih/bukan angka
             currentLine = line.split(" ");
             if(currentLine.length != 3){
-                msg("Error: Format N M P tidak valid");
+                msg(imageView, l, "Error: Format N M P tidak valid");
                 return false;
             }
             try{
@@ -57,15 +65,15 @@ public class Validation {
                 data.P = Integer.parseInt(currentLine[2]);
 
                 if(data.N <= 0 || data.M <= 0 || data.P <= 0){
-                    msg("Error: N, M, atau P bernilai <= 0");
+                    msg(imageView, l, "Error: N, M, atau P bernilai <= 0");
                     return false;
                 }
                 if(data.P > 26){
-                    msg("Nilai P > 26");
+                    msg(imageView, l, "Nilai P > 26");
                     return false;
                 }
             } catch(Exception as){
-                msg("Error: Format N M P tidak valid");
+                msg(imageView, l, "Error: Format N M P tidak valid");
                 return false;
             }
             
@@ -73,18 +81,18 @@ public class Validation {
             // Baris 2
             data.S = br.readLine();
             if(data.S == null){
-                msg("Error: File .txt tidak valid");
+                msg(imageView, l, "Error: File .txt tidak valid");
                 return false;
             }
             line.replaceAll("\\s+$", "");
             
             if(line.length() ==0){
-                msg("Error: Terdapat empty line pada file .txt");
+                msg(imageView, l, "Error: Terdapat empty line pada file .txt");
                 return false;
             }
 
             if(data.S.equals("DEFAULT") == false){
-                msg("Error: mode permainan tidak valid");
+                msg(imageView, l, "Error: mode permainan tidak valid");
                 return false;
             }
 
@@ -100,7 +108,7 @@ public class Validation {
                     line.replaceAll("\\s+$", "");
 
                     if(line.length() ==0){
-                        msg("Error: Terdapat empty line pada file .txt");
+                        msg(imageView, l, "Error: Terdapat empty line pada file .txt");
                         return false;
                     }
 
@@ -113,7 +121,7 @@ public class Validation {
                             currentChar = c;
                             // Validasi alfabet kapital
                             if(!isUpperCaseAlphabet(c)){
-                                msg("Error: Karakter piece tidak valid");
+                                msg(imageView, l, "Error: Karakter piece tidak valid");
                                 return false;
                             }
 
@@ -126,7 +134,7 @@ public class Validation {
                                     if(firstOcc == '?'){
                                         firstOcc = currentChar;
                                     } else{
-                                        msg("Error: Format piece tidak valid (Karakter berbeda dalam 1 line)");
+                                        msg(imageView, l, "Error: Format piece tidak valid (Karakter berbeda dalam 1 line)");
                                         return false;
                                     }
                                 }
@@ -137,7 +145,7 @@ public class Validation {
                     // Periksa apakah id duplikat
                     for(k=0;k<i;k++){
                         if(data.pieces[i][0].id == data.pieces[k][0].id){
-                            msg("Error: Karakter pada piece duplikat");
+                            msg(imageView, l, "Error: Karakter pada piece duplikat");
                             return false;
                         }
                     }
@@ -158,20 +166,20 @@ public class Validation {
                 }
                 
                 if(i < data.P-1){
-                    msg("Error: Jumlah piece kurang");
+                    msg(imageView, l, "Error: Jumlah piece kurang");
                     return false;
                 }
             } catch(Exception as){
                 if(i > data.P-1){
-                    msg("Error: Jumlah piece melebihi nilai P");
+                    msg(imageView, l, "Error: Jumlah piece melebihi nilai P");
                     return false;
                 }
-                msg("Error: Format piece tidak valid");
+                msg(imageView, l, "Error: Format piece tidak valid");
                 return false;
             }
 
         }  catch (IOException e){
-            msg("Error: File txt tidak ditemukan");
+            msg(imageView, l, "Error: File txt tidak ditemukan");
             return false;
         }
 
@@ -258,10 +266,5 @@ public class Validation {
             }
         }
         return data;
-    }
-
-    public static void main(String[] args){
-        boolean valid = txt("data/", "original.txt");
-        System.out.println(valid);
     }
 }

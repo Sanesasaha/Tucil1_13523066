@@ -1,3 +1,5 @@
+package Function;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -140,7 +142,7 @@ public class FileIO {
             int i, j;
             Board B = data.B;
 
-            FileWriter writer = new FileWriter(filename.replace(".txt", "-solution.txt"));
+            FileWriter writer = new FileWriter("data/output/" + filename.replace(".txt", "-solution.txt"));
             writer.write("Solusi untuk file " + filename.replace("-solution.txt", ".txt") + "\n");
             writer.write("\n");
 
@@ -190,7 +192,7 @@ public class FileIO {
         exec = (end - start)/1000000;
 
         writeOutputCLI("original.txt", data, exec);
-        Image.create(data.B, "original-solution.txt");
+        ImageSave.create(data.B, "original-solution.txt");
         // writeOutputTxt("original.txt", data, exec);
     }
 }

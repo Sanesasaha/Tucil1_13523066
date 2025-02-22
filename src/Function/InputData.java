@@ -1,3 +1,5 @@
+package Function;
+
 public class InputData {
     public int N, M, P;
     public String S;

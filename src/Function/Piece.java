@@ -1,3 +1,5 @@
+package Function;
+
 public class Piece {
     public int width = 0; 
     public int height = 0;

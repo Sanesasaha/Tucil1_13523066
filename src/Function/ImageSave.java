@@ -1,3 +1,5 @@
+package Function;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,7 +9,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-public class Image {
+public class ImageSave {
     public static void create(Board B, String filename){
         int i, j, a, b;
         int width, height;
@@ -58,12 +60,12 @@ public class Image {
         }
 
         // Save
-        filename.replace(".txt", "");
-        File outputFile = new File("data/output/" + filename + ".png");
+        
+        File outputFile = new File("data/output/" + filename.replace(".txt", "") + ".png");
         outputFile.getParentFile().mkdirs();
         try {
             ImageIO.write(image, "png", outputFile);
-            System.out.println("Image disimpan sebagai " + filename + ".png");
+            System.out.println("Image disimpan sebagai " + filename.replace(".txt", "") + ".png");
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }

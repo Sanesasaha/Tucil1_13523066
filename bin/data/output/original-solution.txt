@@ -1,0 +1,10 @@
+Solusi untuk file original.txt
+
+ACCCBBDDDDF
+AAACCBBDLLF
+EEGJHHHKILF
+EGGJJHKKIFF
+EEGGJJKKIII
+
+Waktu pencarian (ms) : 14
+Banyak kasus ditinjau: 503731

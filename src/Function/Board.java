@@ -3,10 +3,9 @@ package Function;
 public class Board {
     public int width = -1;
     public int height = -1;
-    public int[] top_left_index = {0, 0}; //TODOLIST: tli untuk bonus custom
     public int status = 0; // -1 : no solution, 0 : still searching, 1 : found
 
-    public int total_case = 0; //TODOLIST: how to count
+    public int total_case = 0;
     public char[][] state;
 
     public void initiate(){
@@ -34,7 +33,6 @@ public class Board {
     }
 
     // Menempatkan piece P dengan tli pada posisi [row][col]
-    // TODOLIST: perhitungan total kasusnya gimana?
     public void place(Piece P, int row, int col){
         int i, j;
 

@@ -137,14 +137,6 @@ public class Validation {
                         }
                     }
 
-                    // Periksa apakah id duplikat
-                    for(k=0;k<i;k++){
-                        if(data.pieces[i][0].id == data.pieces[k][0].id){
-                            msg("Error: Karakter pada piece duplikat");
-                            return false;
-                        }
-                    }
-
                     // Cek apakah baris saat ini merupakan piece baru atau sambungan baris sebelumnya
                     if(data.pieces[i][0].id != '?' && data.pieces[i][0].height != 0){
                         if(currentChar != data.pieces[i][0].id){
@@ -172,7 +164,15 @@ public class Validation {
                 msg("Error: Format piece tidak valid");
                 return false;
             }
-
+            // Periksa apakah id duplikat
+            for(i=0;i<data.P;i++){
+                for(k=i+1;k<data.P;k++){
+                    if(data.pieces[i][0].id == data.pieces[k][0].id){
+                        msg("Error: Karakter pada piece duplikat");
+                        return false;
+                    }
+                }
+            }
         }  catch (IOException e){
             msg("Error: File txt tidak ditemukan");
             return false;
@@ -197,10 +197,10 @@ public class Validation {
         for(k=0;k<data.P;k++){
             // Periksa apakah dimensi piece lebih kecil dari dimensi board
             if(
-                data.pieces[k][0].height > data.B.height &&
-                data.pieces[k][0].width > data.B.width &&
-                data.pieces[k][0].height > data.B.width &&
-                data.pieces[k][0].width > data.B.height
+                (data.pieces[k][0].height > data.B.height &&
+                data.pieces[k][0].height > data.B.width) ||
+                (data.pieces[k][0].width > data.B.width &&
+                data.pieces[k][0].width > data.B.height)
             ){
                 return false;
             }

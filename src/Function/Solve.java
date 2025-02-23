@@ -5,7 +5,6 @@ public class Solve {
         int i, j;
         int currentRow = row;
         int currentCol = col;
-
         Board board = data.B;
         Piece[][] pieces = data.pieces;
         int total_pieces = data.P;
@@ -35,13 +34,11 @@ public class Solve {
                 currentRow++;
             }
         }
-        
         // Basis: solusi ditemukan
         if(currentRow == board.height && currentCol == board.width && board.state[currentRow-1][currentCol-1] != ' '){
             board.status = 1;
             return board;
         }
-
         // Mencoba meletakkan piece di dalam board
         for(i=0; i<total_pieces; i++){
             j = 0;
@@ -49,7 +46,6 @@ public class Solve {
                 board.total_case++;
                 if(pieces[i][0].isPlaced == false){
                     board.place(pieces[i][j], currentRow, currentCol);
-
                     // Jika berhasil diletakkan, lanjutkan ke tahap berikutnya
                     if(board.state[currentRow][currentCol] == pieces[i][j].id){
                         pieces[i][0].isPlaced = true;
@@ -58,18 +54,14 @@ public class Solve {
                         if(board.status == 1){
                             return board;
                         }
-
                         // Jika solusi tidak ditemukan, hapus piece yang baru saja diletakkan, tukar dengan konfigurasi lain
                         pieces[i][0].isPlaced = false;
                         board.pop(pieces[i][j], currentRow, currentCol);
                     } 
                 }
-
                 j++;
             }
-            
         }
-
         // Tidak ada solusi yang ditemukan
         data.B.status = -1;
         return data.B;

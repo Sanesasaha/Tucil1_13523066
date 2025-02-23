@@ -134,19 +134,11 @@ public class GUIValidation {
                                     if(firstOcc == '?'){
                                         firstOcc = currentChar;
                                     } else{
-                                        msg(imageView, l, "Error: Format piece tidak valid (Karakter berbeda dalam 1 line)");
+                                        msg(imageView, l, "Error: Karakter Piece berbeda dalam 1 line");
                                         return false;
                                     }
                                 }
                             }
-                        }
-                    }
-
-                    // Periksa apakah id duplikat
-                    for(k=0;k<i;k++){
-                        if(data.pieces[i][0].id == data.pieces[k][0].id){
-                            msg(imageView, l, "Error: Karakter pada piece duplikat");
-                            return false;
                         }
                     }
 
@@ -177,7 +169,15 @@ public class GUIValidation {
                 msg(imageView, l, "Error: Format piece tidak valid");
                 return false;
             }
-
+            // Periksa apakah id duplikat
+            for(i=0;i<data.P;i++){
+                for(k=i+1;k<data.P;k++){
+                    if(data.pieces[i][0].id == data.pieces[k][0].id){
+                        msg(imageView, l, "Error: Karakter pada piece duplikat");
+                        return false;
+                    }
+                }
+            }
         }  catch (IOException e){
             msg(imageView, l, "Error: File txt tidak ditemukan");
             return false;

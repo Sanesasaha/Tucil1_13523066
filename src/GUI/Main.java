@@ -90,7 +90,7 @@ public class Main extends Application {
             saveImageButton
             );
         buttons.setAlignment(Pos.CENTER);
-        buttons.setVisible(false);
+        // buttons.setVisible(false);
         
         ImageView solutionImg = new ImageView(new Image("file:" + "img/nosolution.jpg"));
         solutionImg.setFitWidth(300);
@@ -117,7 +117,7 @@ public class Main extends Application {
         button1.setOnAction(e -> controller.uploadFile(imageView, currentFile, errorMessage));
         button2.setOnAction(e -> controller.fullSolve(
             imageView, errorMessage, grid, secondScreen,
-            solution_state, solveInfo, buttons, solutionImg
+            solution_state, solveInfo, saveImageButton, solutionImg
             ));
         
         saveImageButton.setOnAction(e -> controller.isImageSaved = true);

@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.control.Button;
 
 
 public class Controller {
@@ -59,7 +60,7 @@ public class Controller {
         }
     }
 
-    public void fullSolve(ImageView imageView, Label errorMessage, GridPane grid, VBox secondScreen, Label solution_state, Label solveInfo, HBox buttons, ImageView solutionImg){
+    public void fullSolve(ImageView imageView, Label errorMessage, GridPane grid, VBox secondScreen, Label solution_state, Label solveInfo, Button saveImageButton, ImageView solutionImg){
         Function.FileIO fileIO = new FileIO();
         Function.Solve solve = new Solve();
         Function.GUIValidation validation = new Function.GUIValidation();
@@ -86,14 +87,15 @@ public class Controller {
                 searchTime = exec;
                 if(data.B.status == 1){
                     solution_state.setText("Solution Found!");
-                    buttons.setVisible(true);
+                    saveImageButton.setVisible(true);
                     ImageSave.create(data.B, myFile);
                     solutionImg.setImage(new Image("file:data/output/" + myFile.replace(".txt", ".png")));
-                    solutionImg.setFitWidth(600);
-                    solutionImg.setFitHeight(600);
+                    solutionImg.setFitWidth(300);
+                    solutionImg.setFitHeight(300);
+                    solutionImg.setPreserveRatio(true);        
                 } else{
                     solution_state.setText("Solution Not Found...");
-                    buttons.setVisible(false);
+                    saveImageButton.setVisible(false);
                     solutionImg.setImage(new Image("file:img/nosolution.jpg"));
                     solutionImg.setFitWidth(300);
                     solutionImg.setFitHeight(300);
@@ -107,7 +109,7 @@ public class Controller {
                 grid.setVisible(false);
                 secondScreen.setVisible(true);
             } else{
-                errorMessage.setText("Error: terdapat dimensi piece yang tidak valid");
+                errorMessage.setText("Error: jumlah tile/dimensi piece tidak valid");
             }
         }
     }

@@ -1,4 +1,6 @@
-2 2 1
+2 3
 DEFAULT
 AA
- AA
+ A
+B
+CC

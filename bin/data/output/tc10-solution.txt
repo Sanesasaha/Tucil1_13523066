@@ -1,0 +1,10 @@
+Solusi untuk file tc10.txt
+
+BDDDC
+BDADC
+BAAAC
+BBAFC
+FFFFF
+
+Waktu pencarian (ms) : 0
+Banyak kasus ditinjau: 923

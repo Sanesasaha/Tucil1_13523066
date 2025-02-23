@@ -1,0 +1,6 @@
+2 3 27
+DEFAULT
+AA
+ A
+B
+CC

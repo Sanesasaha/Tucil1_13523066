@@ -1,0 +1,9 @@
+Solusi untuk file tc09.txt
+
+AAABB
+CCAAB
+CDDAA
+CDEEE
+
+Waktu pencarian (ms) : 0
+Banyak kasus ditinjau: 26

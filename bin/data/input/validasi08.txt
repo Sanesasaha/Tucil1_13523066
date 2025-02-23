@@ -1,0 +1,6 @@
+2 3 3
+NORMAL
+AA
+ A
+B
+CC

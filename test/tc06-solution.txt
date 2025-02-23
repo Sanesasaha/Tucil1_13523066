@@ -1,0 +1,10 @@
+Solusi untuk file tc06.txt
+
+ACCCBBDDDDF
+AAACCBBDLLF
+EEGJHHHKILF
+EGGJJHKKIFF
+EEGGJJKKIII
+
+Waktu pencarian (ms) : 17
+Banyak kasus ditinjau: 503731

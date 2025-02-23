@@ -15,7 +15,7 @@ Selamat datang di program IQPuzzlerProSolver! Program ini merupakan program yang
 
 Untuk menjalankan program, silakan ikuti langkah-langkah berikut:
 1. lakukan instalasi Java 23 dan JavaFX 23
-2. kemudian clone repositori ini pada perangkat Anda.
+2. Clone repositori ini pada perangkat Anda.
 3. Pada CLI, bergeraklah menuju folder bin
 4. Jalankan perintah berikut:
   ```java --module-path "path menuju folder lib javafx-sdk-23" --add-modules javafx.controls,javafx.fxml - jar IQPuzzlerProSolver.jar``` 
